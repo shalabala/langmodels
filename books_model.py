@@ -9,7 +9,7 @@ class BooksModel(nn.Module):
         self.rnn = nn.RNN(hidden_size, hidden_size, batch_first=True)
         self.fc = nn.Linear(hidden_size, vocab_size)
 
-    def forward(self, x):
+    def forward(self, x, h):
         x = self.embed(x)
         out, h = self.rnn(x, h)
         out = self.fc(out)
