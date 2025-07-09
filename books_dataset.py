@@ -28,8 +28,8 @@ class BooksDataset(Dataset):
                            ] = line[:last_colon_idx]
 
     def __len__(self):
-        return self.tokens.shape[0]
+        return self.tokens.shape[0] - self.sequence_len -1 # this is so that we always give back data points of the same length
 
     def __getitem__(self, i):
-        return (self.tokens[i, i+self.sequence_len], self.tokens[i+1, i+self.sequence_len+1])
+        return (self.tokens[i: i+self.sequence_len], self.tokens[i+1: i+self.sequence_len+1])
         
