@@ -22,13 +22,13 @@ class BooksDataset(Dataset):
             count = struct.unpack("<Q", tf.read(8))[0]
             i = 0
             batch = 4096 * 20000  # around 100mb, batching reduces unnecessary mem usage
-            tokens = torch.asarray([], dtype=torch.uint16)
+            tokens = torch.asarray([], dtype=torch.int)
             while i < count:
                 shorts_to_unpack = min(batch, count - i)
                 tokens_py = struct.unpack(
                     f"<{shorts_to_unpack}H", tf.read(2*shorts_to_unpack))
                 tokens = torch.cat((tokens,  torch.asarray(
-                    tokens_py, dtype=torch.uint16)))
+                    tokens_py, dtype=torch.int)))
                 del tokens_py
                 i += shorts_to_unpack
 
